@@ -3,7 +3,7 @@ odoo.define('home_page', function (require) {
 
     var core = require('web.core');
     var Widget = require('web.Widget');
-    var Model = require('web.Model');
+    //var Model = require('web.Model');
     var session = require('web.session');
     var framework = require('web.framework');
 
@@ -202,7 +202,7 @@ odoo.define('home_page', function (require) {
             self.$el.append("<div id='main' class='main'></div>")
             /*首页分为三块  样式进行显示 分别是 数据统计  业务总览 实时报表 */
             var most_frame = this.three_part_qweb_render();
-            new Model("home.page").call("get_action_url").then(function (result) {
+            self._rpc({model: 'home.page', method: 'get_action_url'}).then(function (result) {
                 var index = 0;
                 /* 三块 可以选择性的不显示某个 模块 */
                 if (self.three_part_is_show(result, most_frame)) {
