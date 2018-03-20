@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
-import goods
-import stock_request
+from . import goods
+from . import stock_request

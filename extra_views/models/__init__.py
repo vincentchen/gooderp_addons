@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-import ir_views
+from . import ir_views

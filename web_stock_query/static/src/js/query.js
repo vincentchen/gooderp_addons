@@ -1,6 +1,6 @@
 odoo.define('web.stock_query', function(require) {
     var Client = require('web.WebClient');
-    var Model = require('web.DataModel');
+    // var Model = require('web.DataModel');
     var Core = require('web.core');
     
     Client.include({
@@ -65,7 +65,7 @@ odoo.define('web.stock_query', function(require) {
 
         show_query_board: function($input) {
             var self = this;
-            new Model('goods').call('name_search', {name: $input.val()} ).then(function(results) {
+            self._rpc({model: 'goods', method: 'name_search', args: [{name: $input.val()}]}).then(function (results) {
                 if (results.length <= 0) return self.hide_query_board();
 
                 self.$board = $(Core.qweb.render('web_stock_query.search_list', {'values': _.map(results, function(result) {

@@ -40,7 +40,7 @@ class ReportBase(models.Model):
     def execute_sql(self, sql_type='out'):
         context = self.get_context(sql_type, context=self.env.context)
         for key, value in context.iteritems():
-            if isinstance(context[key], basestring):
+            if isinstance(context[key], str):
                 context[key] = value.encode('utf-8')
 
         self.env.cr.execute((self.select_sql(sql_type) + self.from_sql(sql_type) + self.where_sql(
@@ -76,10 +76,10 @@ class ReportBase(models.Model):
             field, opto, value = domain
 
             compute_operator = {
-                'ilike': lambda field, value: unicode(value).lower() in unicode(field).lower(),
-                'like': lambda field, value: unicode(value) in unicode(field),
-                'not ilike': lambda field, value: unicode(value).lower() not in unicode(field).lower(),
-                'not like': lambda field, value: unicode(value) not in unicode(field),
+                'ilike': lambda field, value: str(value).lower() in str(field).lower(),
+                'like': lambda field, value: str(value) in str(field),
+                'not ilike': lambda field, value: str(value).lower() not in str(field).lower(),
+                'not like': lambda field, value: str(value) not in str(field),
                 'in': lambda field, value: field in value,
                 'not in': lambda field, value: field not in value,
                 '=': operator.eq,
@@ -127,7 +127,7 @@ class ReportBase(models.Model):
 
         def dict_plus(collect, values):
             for key, value in values.iteritems():
-                if isinstance(value, (long, int, float)):
+                if isinstance(value, (int, float)):
                     if key not in collect:
                         collect[key] = 0
                     collect[key] += value

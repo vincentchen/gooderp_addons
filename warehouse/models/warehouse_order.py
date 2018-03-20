@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from utils import inherits, inherits_after, create_name, create_origin
+from .utils import inherits, inherits_after, create_name, create_origin
 import odoo.addons.decimal_precision as dp
 from odoo import models, fields, api
 

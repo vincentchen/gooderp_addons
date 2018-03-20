@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-import test_asset
+from . import test_asset

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from openerp import models
-from openerp import fields
+from odoo import models
+from odoo import fields
 
 
 class CommonDialogWizard(models.TransientModel):

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import models
+from odoo import models
 
 
 def open_dialog(self, func, options=None):

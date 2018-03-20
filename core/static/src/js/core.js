@@ -7,7 +7,7 @@ odoo.define('core.core', function (require) {
     var UserMenu = require('web.UserMenu');
     var Menu = require('web.Menu');
     var session = require('web.session');
-    var Model = require('web.Model');
+    // var Model = require('web.Model');
     var FormView = require('web.FormView');
     var PivotView = require('web.PivotView');
     var WebClient = require('web.AbstractWebClient');

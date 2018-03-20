@@ -4,7 +4,7 @@ var ListView = require('web.ListView');
 var FormView = require('web.FormView');
 var form_relational = require('web.form_relational');
 var data = require('web.data');
-var Model = require('web.Model');
+// var Model = require('web.Model');
 var menu = require('web.Menu');
 
 FormView.include({
@@ -24,7 +24,11 @@ FormView.include({
                             menu.do_reload_needaction();
                         }
                     }).then(function() {
-                        new Model("wh.move").call("scan_barcode",[self.model, $this.val(), self.datarecord.id]).then(
+                        self._rpc({
+                            model: "wh.move",
+                            method: "scan_barcode",
+                            args: [self.model, $this.val(), self.datarecord.id]
+                        }).then(
                             function() {
                                 self.reload();
                                 self.$el.find('input').val('');

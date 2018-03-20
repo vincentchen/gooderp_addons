@@ -150,7 +150,7 @@ class ExcelExportView(ExcelExport, ):
                 self.setOutCell(worksheet, 0, i, fieldname)
             for row, row_vals in enumerate(rows):
                 for col, col_value in enumerate(row_vals):
-                    if isinstance(col_value, basestring):
+                    if isinstance(col_value, str):
                         col_value = re.sub("\r", " ", col_value)
                     self.setOutCell(worksheet, col, row + 1, col_value)
         else:
@@ -175,7 +175,7 @@ class ExcelExportView(ExcelExport, ):
                         cell_style = colour_style
                     elif row_index != len(rows) - 1:
                         cell_style = base_style
-                        if isinstance(cell_value, basestring):
+                        if isinstance(cell_value, str):
                             cell_value = re.sub("\r", " ", cell_value)
                         elif isinstance(cell_value, datetime.datetime):
                             cell_style = datetime_style

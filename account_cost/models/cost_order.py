@@ -19,11 +19,10 @@
 #
 ##############################################################################
 
-from odoo import fields, models, api
 import odoo.addons.decimal_precision as dp
+from odoo import fields, models, api
 from odoo.exceptions import UserError
-from datetime import datetime
-from odoo.tools import float_compare, float_is_zero
+from odoo.tools import float_is_zero
 
 # 购货订单审核状态可选值
 COST_ORDER_STATES = [

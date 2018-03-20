@@ -21,19 +21,17 @@
 #
 ##############################################################################
 
-from odoo import fields, models, api
-import xmlrpclib
-import socket
-import os
-import time
 import base64
+import datetime
 import logging
+import os
+import socket
 
 import pytz
-import datetime
+import xmlrpclib
 
+from odoo import fields, models, api
 from odoo import tools
-from odoo import netsvc
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -43,7 +41,7 @@ def execute(connector, method, *args):
     res = False
     try:
         res = getattr(connector, method)(*args)
-    except socket.error, e:
+    except socket.error as e:
         raise e
     return res
 
@@ -88,7 +86,7 @@ class DbBackup(models.Model):
         master_pass = tools.config.get('admin_passwd', False)
         res_user_obj = self.env.get('res.users')
         if not master_pass:
-            raise
+            raise UserError('Error ! No admin passwd config.')
         for rec in confs:
             db_list = self.get_db_list(rec.host, rec.port)
             # Get UTC time
@@ -100,7 +98,7 @@ class DbBackup(models.Model):
                 res_user_res.tz) if res_user_res.tz else pytz.utc
             # Set to usre's localtime
             curtime = pytz.utc.localize(curtime).astimezone(tz)
-            #curtime = curtime.astimezone(pytz.utc)
+            # curtime = curtime.astimezone(pytz.utc)
 
             if rec.name in db_list:
                 try:
@@ -118,7 +116,9 @@ class DbBackup(models.Model):
                     bkp = execute(conn, 'dump', master_pass, rec.name, 'zip')
                 except:
                     _logger.info(
-                        'backup', "Could'nt backup database %s. Bad database administrator password for server running at http://%s:%s" % (rec.name, rec.host, rec.port))
+                        'backup',
+                        "Could'nt backup database %s. Bad database administrator password for server running at http://%s:%s" % (
+                            rec.name, rec.host, rec.port))
                     continue
                 bkp = base64.decodestring(bkp)
                 fp = open(file_path, 'wb')
@@ -136,7 +136,7 @@ class DbBackup(models.Model):
         master_pass = tools.config.get('admin_passwd', False)
         res_user_obj = self.env.get('res.users')
         if not master_pass:
-            raise
+            raise UserError('Error ! No admin passwd config.')
         for rec in confs:
             db_list = self.get_db_list(rec.host, rec.port)
             # Get UTC time
@@ -148,7 +148,7 @@ class DbBackup(models.Model):
                 res_user_res.tz) if res_user_res.tz else pytz.utc
             # Set to usre's localtime
             curtime = pytz.utc.localize(curtime).astimezone(tz)
-            #curtime = curtime.astimezone(pytz.utc)
+            # curtime = curtime.astimezone(pytz.utc)
 
             if rec.name in db_list:
                 try:
@@ -162,7 +162,7 @@ class DbBackup(models.Model):
                 bkp = ''
                 try:
                     self._db_pg_dump(rec.name, file_path)
-                except Exception, ex:
+                except Exception as ex:
                     _logger.warn('auto_backup DUMP DB except: ' + str(ex))
                     continue
         return True
@@ -170,15 +170,14 @@ class DbBackup(models.Model):
     @api.model
     def _db_pg_dump(self, db_name, db_filename):
         _logger.info('auto_backup DUMP DB!')
-        pg_passwd = os.environ.get(
-            'PGPASSWORD') or tools.config['db_password'] or False
+        pg_passwd = os.environ.get('PGPASSWORD') or tools.config['db_password'] or False
         data = ''
         if not pg_passwd:
             _logger.error(
                 'DUMP DB: %s failed! Please verify the configuration of the database password on the server. '
                 'You may need to create a .pgpass file for authentication, or specify `db_password` in the '
                 'server configuration file.\n %s', db_name, data)
-            raise Exception, "Couldn't dump database"
+            raise Exception("Couldn't dump database")
         os.environ['PGPASSWORD'] = pg_passwd
         cmd = ['pg_dump', '--format=c', '--no-owner']
         if tools.config['db_user']:

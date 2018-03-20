@@ -23,4 +23,4 @@
 #
 ##############################################################################
 
-import backup_scheduler
+from . import backup_scheduler

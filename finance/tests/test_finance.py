@@ -367,7 +367,7 @@ class TestVoucherTemplateLine(TransactionCase):
         self.voucher_template_wizard.save_as_template()
         template = self.env['voucher.template'].search([])[0] if self.env[
             'voucher.template'].search([]) else False
-        print "template", template
+        print("template", template)
         for line in template.line_ids:
             # 会计科目不存在
             line.account_id = False

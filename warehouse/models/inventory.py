@@ -2,7 +2,7 @@
 
 from odoo.osv import osv
 # from odoo.osv import fields
-from utils import create_name, safe_division
+from .utils import create_name, safe_division
 import odoo.addons.decimal_precision as dp
 from odoo.exceptions import UserError
 from odoo import models

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo.osv import osv
-from utils import inherits, inherits_after, \
+from .utils import inherits, inherits_after, \
     create_name, safe_division, create_origin
 import odoo.addons.decimal_precision as dp
 from itertools import islice

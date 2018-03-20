@@ -5,10 +5,12 @@
     'author': "开阖静静<gilbert@osbzr.com>(开阖出品)",
     'summary': '首页配置',
     'category': 'Tools',
+    "installable": True,
+    "application": True,
     'description':
-    '''
-                            该模块实现了 GoodERP 可配置的首页系统。
-    ''',
+        '''
+                                该模块实现了 GoodERP 可配置的首页系统。
+        ''',
     'data': [
         'security/groups.xml',
         "views/home_page_views.xml",

@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-import test_menu
+from . import test_menu

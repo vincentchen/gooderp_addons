@@ -3,7 +3,7 @@ odoo.define('warehouse.wave', function(require) {
     var FormView = require('web.FormView');
     var form_relational = require('web.form_relational');
     var data = require('web.data');
-    var Model = require('web.Model');
+    // var Model = require('web.Model');
     var core = require('web.core');
     var Widget = require('web.Widget');
     var session = require('web.session');
@@ -30,7 +30,11 @@ odoo.define('warehouse.wave', function(require) {
                         }).then(function() {
                             var input_code = $this.val();
                             self.$el.find('input').val('');
-                            new Model("do.pack").call("scan_barcode", [self.model, input_code, self.datarecord.id]).then(
+                            self._rpc({
+                                model: "do.pack",
+                                method: "scan_barcode",
+                                args: [self.model, input_code, self.datarecord.id]
+                            }).then(
                                 function(result) {
                                     var audio;
                                     audio = new Audio();
@@ -68,7 +72,7 @@ odoo.define('warehouse.wave', function(require) {
 
     function WarehouseWave(parent, action) {
         var self = this;
-        new Model('wh.move').call('get_moves_html', [action.context.move_ids]).then(
+        self._rpc({model: 'wh.move', method: 'get_moves_html', args: [action.context.move_ids]}).then(
             function(result) {
                 var all_print = $("<div style='page-break-after:always;'></div>");
                 for (var i = 0; i < result.length; i=i+2) {
@@ -98,7 +102,7 @@ odoo.define('warehouse.wave', function(require) {
 
     function WarehouseWavePackage(parent, action) {
         var self = this;
-        new Model('wh.move').call('get_moves_html_package', [action.context.move_ids]).then(
+        self._rpc({model: 'wh.move', method: 'get_moves_html_package', args: [action.context.move_ids]}).then(
             function(result) {
                 var all_print = $("<div style='page-break-after:always;'></div>");
                 for (var i = 0; i < result.length; i++) {

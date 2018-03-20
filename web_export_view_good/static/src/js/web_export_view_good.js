@@ -22,7 +22,8 @@ odoo.define('web_export_view_good.web_export_view_good', function (require) {
 var framework = require('web.framework');
 var ListView = require('web.ListView');
 var formats = require('web.formats');
-var Model = require('web.DataModel');
+
+// var Model = require('web.DataModel');
 function compute_main_data(rows,export_columns_keys){
     var export_rows = []
 
@@ -115,9 +116,11 @@ function button_export_action () {
     export_rows = export_rows.concat(compute_main_data(rows,export_columns_keys));
     var amount = view.$el.find('.o_list_view > tfoot > tr');
     export_rows = export_rows.concat(compute_footer_data(amount,export_columns_keys));
-    new Model('report.template').call('get_time', [this.model], {
+    self._rpc({
+        model: 'report.template', method: 'get_time', args: [this.model, {
                 context: this.dataset.context
-            }).done(function (data) {
+        }]
+    }).done(function (data) {
                 var now_day = data[0];
                 var operation_message = new Array(export_columns_names.length);
                 var header = new Array(export_columns_names.length);

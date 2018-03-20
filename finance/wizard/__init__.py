@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-import checkout_wizard
+from . import checkout_wizard

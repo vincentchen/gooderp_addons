@@ -2,7 +2,7 @@
 
 from odoo.osv import osv
 import odoo.addons.decimal_precision as dp
-from utils import safe_division
+from .utils import safe_division
 from odoo import models, fields, api
 from odoo.exceptions import UserError
 

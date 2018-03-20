@@ -35,7 +35,7 @@ class DataModelProxy(object):
     def _compute_by_selection(self, field, temp):
         if field and field.type == 'selection':
             selection = field.selection
-            if isinstance(selection, basestring):
+            if isinstance(selection, str):
                 selection = getattr(self.data, selection)()
             elif callable(selection):
                 selection = selection(self.data)
@@ -162,7 +162,7 @@ class ReportDocx(report_sxw):
             <body>
             """
 
-        html += unicode(serialize.serialize(ofile.document), 'utf-8')
+        html += str(serialize.serialize(ofile.document), 'utf-8')
         html += "</body></html>"
 
         with codecs.open(temp_out_file_html, 'w', 'utf-8') as f:
