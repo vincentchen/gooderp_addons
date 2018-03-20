@@ -56,6 +56,6 @@ class CleanBusinessData(models.Model):
                 if obj._table_exist:
                     sql = "TRUNCATE TABLE %s CASCADE " % obj._table
                     self.env.cr.execute(sql)
-        except Exception, e:
+        except Exception as e:
             raise UserError(e)
         return True
